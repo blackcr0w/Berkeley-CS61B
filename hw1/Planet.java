@@ -20,4 +20,16 @@ public class Planet {
 		this.mass = mass;
 		this.img = img;
 	}
+
+	/** Returns the distance between the current planet and 
+	*   the input planet
+	*
+	*   @param: Planet
+	*   @return: double
+	*/
+	public double calcDistance(Planet planet){
+		double dx = planet.x - this.x;
+		double dy = planet.y - this.y;
+		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+	}
 }
