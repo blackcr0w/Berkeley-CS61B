@@ -10,6 +10,8 @@ public class Planet {
 	public double xVelocity;
 	public double yVelocity;
 	public double mass;
+	public double xNetForce = 0;
+	public double yNetForce = 0;
 	public String img;
 
 	public Planet(double x, double y, double xVelocity, double yVelocity, 
@@ -64,4 +66,20 @@ public class Planet {
 		return calcPairwiseForce(planet) * dy / calcDistance(planet);
 	}
 
+	/** Sets the next force exerted on the current planet by
+	*   all the input planets
+	*
+	*   @param: array of Planets
+	*   @return: void
+	*/
+	public void  setNetForce(Planet[] planets){
+		for (Planet planet : planets){
+			if (this == planet){
+				continue;
+			} else {
+				xNetForce += this.calcPairwiseForceX(planet);
+				yNetForce += this.calcPairwiseForceY(planet); 
+			}
+		}
+	}
 }
