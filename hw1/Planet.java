@@ -4,6 +4,7 @@
 *   Implementation of the planet type
 */
 public class Planet {
+	public static final double G = 6.67e-11;  // Newtons' gravitational constant
 	public double x;
 	public double y;
 	public double xVelocity;
@@ -31,5 +32,15 @@ public class Planet {
 		double dx = planet.x - this.x;
 		double dy = planet.y - this.y;
 		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+	}
+
+	/** Returns the pairwise force between the two planets
+	*   Computed according Newton's Universal Law of Gravitation
+	*
+	*   @param: Planet
+	*   @return: double
+	*/
+	public double calcPairwiseForce(Planet planet){
+		return (G * this.mass * planet.mass) / Math.pow(calcDistance(planet), 2); 
 	}
 }
