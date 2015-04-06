@@ -82,4 +82,13 @@ public class Planet {
 			}
 		}
 	}
+
+	/** Draws the planet using the Princeton Standard Library
+	*
+	*   @param: none
+	*   @return: void
+	*/
+	public void draw(){
+		StdDraw.picture(x, y, img);
+	}
 }
