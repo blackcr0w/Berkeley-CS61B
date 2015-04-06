@@ -43,4 +43,25 @@ public class Planet {
 	public double calcPairwiseForce(Planet planet){
 		return (G * this.mass * planet.mass) / Math.pow(calcDistance(planet), 2); 
 	}
+
+	/** Returns the x-component of the PairwiseForce vector
+	*
+	*   @param: Planet
+	*   @return: double
+	*/
+	public double calcPairwiseForceX(Planet planet){
+		double dx = planet.x - this.x;
+		return calcPairwiseForce(planet) * dx / calcDistance(planet);
+	}
+
+	/** Returns the y-component of the PairwiseForce vector
+	*
+	*   @param: Planet
+	*   @return: double
+	*/
+	public double calcPairwiseForceY(Planet planet){
+		double dy = planet.y - this.y;
+		return calcPairwiseForce(planet) * dy / calcDistance(planet);
+	}
+
 }
