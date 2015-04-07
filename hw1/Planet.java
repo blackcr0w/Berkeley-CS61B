@@ -12,6 +12,8 @@ public class Planet {
 	public double mass;
 	public double xNetForce = 0;
 	public double yNetForce = 0;
+	public double xAccel;
+	public double yAccel;
 	public String img;
 
 	public Planet(double x, double y, double xVelocity, double yVelocity, 
@@ -90,5 +92,22 @@ public class Planet {
 	*/
 	public void draw(){
 		StdDraw.picture(x, y, img);
+	}
+
+	/** Performs time step iterations with dt marking the number
+	*   of time steps.
+	*   
+	*   @param: double
+	*   @return: void
+	*/
+	public void update(double dt){
+		xAccel = xNetForce / mass;
+		yAccel = yNetForce / mass;
+
+		xVelocity = xVelocity + dt * xAccel;
+		yVelocity = yVelocity + dt * yAccel;
+
+		x = x + dt * xVelocity;
+		y = y + dt * yVelocity;
 	}
 }
