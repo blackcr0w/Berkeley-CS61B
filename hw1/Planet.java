@@ -4,14 +4,14 @@
 *   Implementation of the planet type
 */
 public class Planet {
-	public static final double G = 6.67e-11;  // Newtons' gravitational constant
+	public static final double G = 6.67E-11;  // Newtons' gravitational constant
 	public double x;
 	public double y;
 	public double xVelocity;
 	public double yVelocity;
 	public double mass;
-	public double xNetForce = 0;
-	public double yNetForce = 0;
+	public double xNetForce;
+	public double yNetForce;
 	public double xAccel;
 	public double yAccel;
 	public String img;
@@ -91,7 +91,7 @@ public class Planet {
 	*   @return: void
 	*/
 	public void draw(){
-		StdDraw.picture(x, y, img);
+		StdDraw.picture(x, y, "./images/"+img);
 	}
 
 	/** Performs time step iterations with dt marking the number

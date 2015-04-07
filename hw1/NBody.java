@@ -25,8 +25,8 @@ public class NBody {
 	}
 
 	public static void main(String[] args){
-		double T = Integer.parseInt(args[0]);
-		double dt = Integer.parseInt(args[1]);
+		double T = Double.parseDouble(args[0]);
+		double dt = Double.parseDouble(args[1]);
 		String filename = args[2];
 		In input = new In(filename);
 		int numPlanets = input.readInt();
@@ -40,6 +40,37 @@ public class NBody {
 			System.out.println("Input file: " + filename);
 			System.out.println("Number of Planets: " + numPlanets);
 			System.out.println("Radius of the Universe: " + uRadius);
+			System.out.println("Simulation time: " + T);
+			System.out.println("Time step: " + dt);
+		}
+
+		// Populate the universe one planet at a time
+		Planet planets[] = new Planet[numPlanets];
+		for (int index = 0; index < numPlanets; index++){
+			planets[index] = getPlanet(input);
+		}
+
+		// Settings of the universe
+		StdDraw.setScale(-uRadius, uRadius);
+		StdDraw.picture(0, 0, "./images/starfield.jpg");
+		for (Planet planet : planets){
+			planet.draw();
+		}
+
+		// ************************************************************************************
+		// ***************************** Running the animation ******************************
+		for (double time = 0; time < T; time += dt){
+			for (Planet planet : planets){
+				planet.setNetForce(planets);
+				planet.update(dt);
+			}
+
+			StdDraw.picture(0, 0, "./images/starfield.jpg");
+			for (Planet planet : planets){
+				planet.draw();
+			}
+
+			StdDraw.show(10);
 		}
 	}
 }
