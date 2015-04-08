@@ -8,6 +8,19 @@ public class IntListOps {
       * to change. */
     public static IntList incrList(IntList L, int x) {
         /* your code here */
+	if (L == null){
+		return null;
+	}
+
+	IntList newList = new IntList(L.head + x, null);
+	IntList pointer = newList;
+	while (L.tail != null){
+		L = L.tail;
+		pointer.tail = new IntList(L.head + x, null);
+		pointer = pointer.tail;
+	}
+
+	return newList;	
     }
 
     /** Returns an IntList identical to L, but with
@@ -15,6 +28,17 @@ public class IntListOps {
       * the 'new' keyword. */
     public static IntList dincrList(IntList L, int x) {
         /* your code here */
+	if (L == null){
+		return null;
+	}
+	IntList pointer = L;
+	pointer.head += x;
+	while (pointer.tail != null){
+		pointer = pointer.tail;
+		pointer.head += x;
+	}
+
+	return L;
     }
 
 
@@ -24,7 +48,9 @@ public class IntListOps {
         L.tail.tail = new IntList(9, null);
         System.out.println(L);
         System.out.println(incrList(L, 3));
+	System.out.println("L after non-destro incr.: " + L);
         System.out.println(dincrList(L, 3));
+	System.out.println("L after destro incr.: " + L);
 
     }
 } 
