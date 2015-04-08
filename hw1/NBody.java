@@ -5,7 +5,7 @@
 *   simulator.
 */
 public class NBody {
-	private static boolean DEBUG = true;
+	private static boolean DEBUG = false;
 
 	/** generate a Planet from a row of the input data
 	*
@@ -50,6 +50,14 @@ public class NBody {
 			planets[index] = getPlanet(input);
 		}
 
+		if (DEBUG){
+			for (int i = 0; i < numPlanets; i++) {
+		    		StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+		                   	planets[i].x, planets[i].y, planets[i].xVelocity, planets[i].yVelocity, 
+		                   	planets[i].mass, planets[i].img);
+			}			
+		}
+
 		// Settings of the universe
 		StdDraw.setScale(-uRadius, uRadius);
 		StdDraw.picture(0, 0, "./images/starfield.jpg");
@@ -59,18 +67,35 @@ public class NBody {
 
 		// ************************************************************************************
 		// ***************************** Running the animation ******************************
-		for (double time = 0; time < T; time += dt){
+		for (double time = 0; time < T; time = time + dt){
 			for (Planet planet : planets){
+				// System.out.println("Working on planet: " + planet.img);
 				planet.setNetForce(planets);
+			}
+
+			for (Planet planet : planets){
+				// System.out.println("Updating the planet: " + planet.img);
 				planet.update(dt);
 			}
 
 			StdDraw.picture(0, 0, "./images/starfield.jpg");
-			for (Planet planet : planets){
+			for (Planet planet: planets){
+				// System.out.println("Drawing planet: " + planet.img);
 				planet.draw();
 			}
 
 			StdDraw.show(10);
+			// System.out.println("Time iteration ends: " + T);
+		}
+
+		// *************************************************************************************
+		// **************************** PRINT THE RESULTS ***********************************
+		StdOut.printf("%d\n", numPlanets);
+		StdOut.printf("%.2e\n", uRadius);
+		for (int i = 0; i < numPlanets; i++) {
+		    StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+		                   planets[i].x, planets[i].y, planets[i].xVelocity, planets[i].yVelocity, 
+		                   planets[i].mass, planets[i].img);
 		}
 	}
 }

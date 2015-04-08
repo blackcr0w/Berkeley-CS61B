@@ -75,6 +75,8 @@ public class Planet {
 	*   @return: void
 	*/
 	public void  setNetForce(Planet[] planets){
+		xNetForce = 0;
+		yNetForce = 0;
 		for (Planet planet : planets){
 			if (this == planet){
 				continue;
