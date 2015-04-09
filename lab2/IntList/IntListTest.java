@@ -38,8 +38,86 @@ public class IntListTest {
      */
 
     //TODO:  Create testSquareListRecursive()
+    @Test
+    public void testSquareListRecursive(){
+        IntList list = IntList.list(0, -3, 5, 11);
+        IntList squaredList = IntList.squareListRecursive(list);
+        assertEquals(IntList.list(0, 9, 25, 121), squaredList);
+        assertEquals(IntList.list(0, -3, 5, 11), list);
+    }
     //TODO:  Create testDcatenate and testCatenate
+    @Test
+    public void testDcatenate(){
+        IntList list1 = IntList.list(1, 2, 3);
+        IntList list2 = IntList.list(4, 5, 6);
+        IntList result = IntList.dcatenate(list1, list2);
+        IntList expected = IntList.list(1, 2, 3, 4, 5, 6);
+        assertEquals(expected, result);
+        assertEquals(list1, result);
 
+        list1 = null;
+        result = IntList.dcatenate(list1, list2);
+        expected = list2;
+        assertEquals(list2, result);
+
+        list1 = IntList.list(1, 2, 3);
+        list2 = null;
+        expected = list1;
+        result = IntList.dcatenate(list1, list2);
+        assertEquals(list1, result);
+    }
+
+    @Test
+    public void testCatenate(){
+        IntList list1 = IntList.list(-2, -1, 0);
+        IntList list2 = IntList.list(1, 2, 3);
+        IntList result = IntList.catenate(list1, list2);
+        IntList expected = IntList.list(-2, -1, 0, 1, 2, 3);
+
+        assertEquals(IntList.list(-2, -1, 0), list1);
+        assertEquals(IntList.list(1, 2, 3), list2);
+        assertEquals(expected, result);
+
+        list1 = null;
+        result = IntList.catenate(list1, list2);
+        assertEquals(list2, result);
+
+        list1 = IntList.list(-2, -1, 0);
+        list2 = null;
+        result = IntList.catenate(list1, list2);
+        assertEquals(list1, result);
+
+        list1 = null;
+        list2 = null;
+        result = IntList.catenate(list1, list2);
+        assertEquals(null, result);
+    }
+
+    @Test
+    public void testRecursiveCatenate(){
+        IntList list1 = IntList.list(-2, -1, 0);
+        IntList list2 = IntList.list(1, 2, 3);
+        IntList result = IntList.recCatenate(list1, list2);
+        IntList expected = IntList.list(-2, -1, 0, 1, 2, 3);
+
+        assertEquals(IntList.list(-2, -1, 0), list1);
+        assertEquals(IntList.list(1, 2, 3), list2);
+        assertEquals(expected, result);
+
+        list1 = null;
+        result = IntList.recCatenate(list1, list2);
+        assertEquals(list2, result);
+
+        list1 = IntList.list(-2, -1, 0);
+        list2 = null;
+        result = IntList.recCatenate(list1, list2);
+        assertEquals(list1, result);
+
+        list1 = null;
+        list2 = null;
+        result = IntList.recCatenate(list1, list2);
+        assertEquals(null, result);
+    }
     /* Run the unit tests in this file. */
     public static void main(String... args) {
         jh61b.junit.textui.runClasses(IntListTest.class);

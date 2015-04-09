@@ -63,14 +63,65 @@ public class IntList {
 
   public static IntList dcatenate(IntList A, IntList B) {
     //TODO:  fill in method
-    return null;
+    if (B == null){
+      return A;
+    } else if (A == null){
+      return B;
+    } else {
+      IntList ptr = A;
+      while (ptr.tail != null){
+        ptr = ptr.tail;
+      }
+      ptr.tail = B;
+    }
+
+    return A;
   }
 
   /** Returns a list consisting of the elements of A followed by the
    ** elements of B.  May NOT modify items of A.  Use 'new'. */
+
+  /** Helper: Returns a new copy of the input IntList
+  */
+  private static IntList copy(IntList B){
+    if (B == null){
+      return null;
+    } else {
+      return new IntList(B.head, copy(B.tail));
+    }
+  }
+
+  /** Catenation: Iterative
+  */
   public static IntList catenate(IntList A, IntList B) {
-    //TODO:  fill in method
-    return null;
+    IntList newList;
+    IntList ptr;
+
+    if (A == null){
+      return copy(B);
+    } else {
+      newList = new IntList(A.head, null);
+      ptr = newList;
+      A = A.tail;
+
+      while (A != null){
+        ptr.tail = new IntList(A.head, null);
+        A  = A.tail;
+        ptr = ptr.tail;
+      }
+      ptr.tail = copy(B);
+      return newList;
+    }
+  }
+
+  /** Recursive catenation:
+  */
+  public static IntList recCatenate(IntList A, IntList B){
+    if (A == null){
+      return copy(B);
+    } else {
+      return new IntList(A.head, recCatenate(A.tail, B));
+    }
   }
 
 
