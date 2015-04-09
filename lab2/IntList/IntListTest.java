@@ -135,6 +135,22 @@ public class IntListTest {
     	assertEquals(list, reversed);
     }
 
+    @Test
+    public void TestDestructiveReversal(){
+    	IntList list = IntList.list(1, 2, 3, 4);
+    	IntList.reverseDestructive(list);
+    	IntList expected = IntList.list(4, 3, 2, 1);
+    	assertEquals(expected, list);
+
+    	list = null;
+    	IntList.reverseDestructive(list);
+    	assertEquals(null, list);
+
+    	list = IntList.list(3);
+    	IntList.reverseDestructive(list);
+    	assertEquals(IntList.list(3), list);
+    }
+
     /* Run the unit tests in this file. */
     public static void main(String... args) {
         jh61b.junit.textui.runClasses(IntListTest.class);

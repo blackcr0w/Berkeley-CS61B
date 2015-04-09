@@ -142,6 +142,45 @@ public class IntList {
   	}
   }
 
+  /** destructive reversal of the IntList
+  */
+
+  /** Helper: Get length of the IntList
+  */
+  private static int length(IntList list){
+  	if (list == null){
+  		return 0;
+  	} else {
+  		return 1 + length(list.tail);
+  	}
+  }
+
+  /** Helper: Swap values at indeces first and second
+  */
+  private static void swap(int first, int second, IntList list){
+  	IntList ptr1 = list;
+  	IntList ptr2 = list;
+
+  	for (int i = 0; i < first; i++){
+  		ptr1 = ptr1.tail;
+  	}
+
+  	for (int j = 0; j < second; j++){
+  		ptr2 = ptr2.tail;
+  	}
+
+  	int tmp = ptr1.head;
+  	ptr1.head = ptr2.head;
+  	ptr2.head = tmp;
+  }
+
+  public static void reverseDestructive(IntList list){
+	int lengthOfList = length(list);
+	for (int i = 0; i < lengthOfList / 2; i++){
+		swap(i, lengthOfList-(i+1), list);
+	}	
+  }
+
 
 
 
