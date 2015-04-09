@@ -118,6 +118,23 @@ public class IntListTest {
         result = IntList.recCatenate(list1, list2);
         assertEquals(null, result);
     }
+
+    @Test
+    public void testDReverseList(){
+    	IntList list = IntList.list(1, 2, 3, 4);
+    	IntList reversed = IntList.reverseNonDestructive(list);
+    	IntList expected = IntList.list(4, 3, 2, 1);
+    	assertEquals(expected, reversed);
+
+    	list = null;
+    	reversed = IntList.reverseNonDestructive(list);
+    	assertEquals(list, reversed);
+
+    	list = IntList.list(3);
+    	reversed = IntList.reverseNonDestructive(list);
+    	assertEquals(list, reversed);
+    }
+
     /* Run the unit tests in this file. */
     public static void main(String... args) {
         jh61b.junit.textui.runClasses(IntListTest.class);

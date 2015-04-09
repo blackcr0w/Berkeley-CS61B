@@ -124,6 +124,24 @@ public class IntList {
     }
   }
 
+  /** non-destructive reversal of the IntList (recursive)
+  */
+  public static IntList reverseNonDestructive(IntList list){
+  	if (list == null){
+  		return list;
+  	} else if (list.tail == null){
+  		return new IntList(list.head, null); 
+  	} else {
+  		IntList reversedRest = reverseNonDestructive(list.tail);
+  		IntList ptr = reversedRest;
+  		while (ptr.tail != null){
+  			ptr = ptr.tail;
+  		}
+  		ptr.tail = new IntList(list.head, null);
+  		return reversedRest;
+  	}
+  }
+
 
 
 
