@@ -120,7 +120,7 @@ public class IntListTest {
     }
 
     @Test
-    public void testDReverseList(){
+    public void TestNonDestructiveReversal(){
     	IntList list = IntList.list(1, 2, 3, 4);
     	IntList reversed = IntList.reverseNonDestructive(list);
     	IntList expected = IntList.list(4, 3, 2, 1);
