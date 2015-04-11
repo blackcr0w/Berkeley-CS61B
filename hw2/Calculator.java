@@ -13,7 +13,14 @@ public class Calculator {
      **/
     public int add(int x, int y) {
         // YOUR CODE HERE
-        return -1;
+        int part = x ^ y;
+        int carry = x & y;
+        if (carry == 0){
+            return part;
+        } else {
+            carry <<= 1;
+            return add(part, carry);
+        }        
     }
 
     /**
@@ -26,7 +33,30 @@ public class Calculator {
      **/
     public int multiply(int x, int y) {
         // YOUR CODE HERE
-        return -1;
+        if (y == 1){
+            return x;
+        } else if (y == 0){
+            return 0;
+        } else{
+            int result = 0;
+            boolean yNegated = false;
+
+            if (y < 0){
+                y = add(~y, 1);
+                yNegated = true; 
+            }
+
+            while (y > 0){
+                result = add(result, x);
+                y -= 1;
+            }
+
+            if (!yNegated){
+                return result;    
+            } else {
+                return add(~result, 1);
+            }            
+        }
     }
 
     /**
