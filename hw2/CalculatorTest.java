@@ -21,7 +21,24 @@ public class CalculatorTest {
 
     // TASK 1: WRITE JUNIT TESTS
     // YOUR CODE HERE
+    @Test
+    public void testAddition(){
+    	int sum = tester.add(0, 0);
+    	int expected = 0;
+    	assertEquals(expected, sum);
 
+    	/** buggy:
+    	*   expected: 0
+    	*   result: -2147483648
+    	*/
+    	sum = tester.add(-1, 1);
+    	expected = 0;
+    	assertEquals(expected, sum);
+
+    	sum = tester.add(-3, -2);
+    	expected = -5;
+    	assertEquals(expected, sum);
+    }
     /* Run the unit tests in this file. */
     public static void main(String... args) {
         jh61b.junit.textui.runClasses(CalculatorTest.class);
