@@ -71,6 +71,39 @@ public class TestDoubleChain {
         result = d.deleteBack();
         assertEquals(null, result);
     }
+
+    @Test
+    public void testIsClose(){
+        double a = 3.421;
+        double b = 3.423;
+        assertEquals(false, DoubleChain.isClose(a, b));
+
+        a = 3.421001;
+        b = 3.421002;
+        assertEquals(true, DoubleChain.isClose(a, b));
+    }
+
+    @Test
+    public void testDeleteByValue(){
+        DoubleChain d = new DoubleChain(5);
+        d.insertBack(4);
+        d.insertBack(3);
+        d.insertBack(5);
+        d.insertFront(4);
+        d.deleteByValue(4);
+        assertEquals(5, d.getFront().val, 1e-11);
+        assertEquals(5, d.getBack().val, 1e-11);
+        assertEquals(3, d.getFront().next.val, 1e-11);
+
+        d = new DoubleChain(-3);
+        d.insertFront(6);
+        d.insertBack(2);
+        d.insertBack(-3);
+        d.insertBack(0);
+        d.deleteByValue(-3);
+        System.out.println(d);
+    }
+
     public static void main(String[] args) {
         jh61b.junit.textui.runClasses(TestDoubleChain.class);
     }

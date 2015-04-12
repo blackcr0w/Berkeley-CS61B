@@ -86,6 +86,34 @@ public class DoubleChain {
 		}
 		size -= 1;
 	}
+
+	/** Returns true if values are close (<= 0.0001).
+	*   False otherwise.
+	*/
+	public static boolean isClose(double value1, double value2){
+		return Math.abs(value1 - value2) < 0.00001;
+	}
+	/** Removes the nodes with value val(approximately). */
+	public void deleteByValue(double value){
+		if (size == 1){
+			return;
+		} 
+		if (isClose(head.val, value)){
+			head = head.next;
+			size -= 1;
+		}
+		DNode iter = head;
+		while (iter.next != null){
+			if (isClose(iter.val, value)){
+				iter.prev.next = iter.next;
+				if (iter.next != null){
+					iter.next.prev = iter.prev;
+				}
+				size -= 1;					
+			}
+			iter = iter.next;
+		}
+	}
 	
 	/** Returns a string representation of the DoubleChain. 
 	  * This is an extra challenge problem. */
