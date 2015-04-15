@@ -33,18 +33,27 @@ public class CalculatorUI{
 			// Integer.valueOf(String value)
 			// is used to get the numeric value.
 			// Assumes the structure of the expression
-			val1 = Integer.valueOf(tokens[0]);
-			val2 = Integer.valueOf(tokens[2]);
+			try {
+				val1 = Integer.valueOf(tokens[0]);
+				val2 = Integer.valueOf(tokens[2]);
 
-			if (tokens[1].equals("+")){
-				result = val1 + val2;
-			} else if (tokens[1].equals("-")){
-				result = val1 - val2;
-			} else{
-				result = val1 * val2;
-			} 
-			calc.saveEquation(equation, result);
-			System.out.println(result);
+				if (tokens[1].equals("+")){
+					result = val1 + val2;
+				} else if (tokens[1].equals("-")){
+					result = val1 - val2;
+				} else if (tokens[1].equals("*")){
+					result = val1 * val2;
+				} else {
+					// hacky, but will do...
+					throw new NumberFormatException();
+				}
+				calc.saveEquation(equation, result);
+				System.out.println(result);				
+			} catch (NumberFormatException a){
+				System.out.println("Invalid command");
+				continue;
+			}
+
 		}
 	}
 
