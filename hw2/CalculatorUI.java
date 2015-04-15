@@ -29,6 +29,12 @@ public class CalculatorUI{
 			} else if (tokens[0].equals("undo") && tokens.length == 1){
 				calc.undoEquation();
 				continue;
+			} else if (tokens[0].equals("sum") && tokens.length == 1){
+				System.out.println(calc.cumulativeSum());
+				continue;
+			} else if (tokens[0].equals("product") && tokens.length == 1){
+				System.out.println(calc.cumulativeProduct());
+				continue;
 			}
 			// Integer.valueOf(String value)
 			// is used to get the numeric value.

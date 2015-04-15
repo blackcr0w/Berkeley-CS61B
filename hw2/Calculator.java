@@ -167,7 +167,13 @@ public class Calculator {
      **/
     public int cumulativeSum() {
         // YOUR CODE HERE
-        return -1;
+        int sum = 0;
+        EquationList ptr = history;
+        while (ptr != null){
+            sum += ptr.result;
+            ptr = ptr.next;
+        }
+        return sum;
     }
 
     /**
@@ -178,6 +184,12 @@ public class Calculator {
      **/
     public int cumulativeProduct() {
         // YOUR CODE HERE
-        return -1;
+        int product = 1;
+        EquationList ptr = history;
+        while (ptr != null){
+            product *= ptr.result;
+            ptr = ptr.next;
+        }
+        return product;
     }
 }
