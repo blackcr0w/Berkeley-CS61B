@@ -58,6 +58,14 @@ public class CalculatorTest {
     	expected = 6;
     	assertEquals(expected, multiple);
     }
+
+    /** Testing saveEquation */
+    @Test
+    public void testSaveEquation(){
+    	tester.saveEquation("3 + 5", 8);
+    	assertEquals("3 + 5", tester.history.equation);
+    	assertEquals(8, tester.history.result);
+    }
     /* Run the unit tests in this file. */
     public static void main(String... args) {
         jh61b.junit.textui.runClasses(CalculatorTest.class);

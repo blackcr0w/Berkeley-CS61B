@@ -5,14 +5,25 @@
 *   user interface for the calculator
 */
 public class CalculatorUI{
+	public static Calculator calc = new Calculator();
+
 	public static void main(String[] args){
 		String[] tokens;
+		String equation;
 		int val1, val2;
 		int result;
 
 		while (true){
 			System.out.print("> ");
-			tokens = StdIn.readLine().split(" ");
+			equation =  StdIn.readLine();
+			tokens = equation.split(" ");
+			if (tokens[0].equals("history")){
+				recallHistory(tokens);
+				continue;
+			} else if (tokens[0].equals("dump")){
+				calc.printAllHistory();
+				continue;
+			}
 			// Integer.valueOf(String value)
 			// is used to get the numeric value.
 			// Assumes the structure of the expression
@@ -26,7 +37,17 @@ public class CalculatorUI{
 			} else{
 				result = val1 * val2;
 			} 
+			calc.saveEquation(equation, result);
 			System.out.println(result);
 		}
+	}
+
+	public static void recallHistory(String[] tokens){
+		if (tokens.length == 1){
+			calc.printAllHistory();
+		} else {
+			int n = Integer.valueOf(tokens[1]);
+			calc.printHistory(n);
+		}	
 	}
 }

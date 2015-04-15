@@ -2,7 +2,8 @@ import list.EquationList;
 
 public class Calculator {
     // YOU MAY WISH TO ADD SOME FIELDS
-
+    EquationList history;
+    int size = 0;
     /**
      * TASK 2: ADDING WITH BIT OPERATIONS
      * add() is a method which computes the sum of two integers x and y using 
@@ -70,6 +71,18 @@ public class Calculator {
      **/
     public void saveEquation(String equation, int result) {
         // YOUR CODE HERE
+        if (history == null){
+            history = new EquationList(equation, result, null);
+        } else {
+            EquationList ptr = history;
+            while (ptr.next != null){
+                ptr = ptr.next;
+            }
+
+            ptr.next = new EquationList(equation, result, null);
+        }
+
+        size += 1;
     }
 
     /**
@@ -81,6 +94,7 @@ public class Calculator {
      **/
     public void printAllHistory() {
         // YOUR CODE HERE
+        printHistory(size);
     }
 
     /**
@@ -92,8 +106,31 @@ public class Calculator {
      **/
     public void printHistory(int n) {
         // YOUR CODE HERE
+        if (n <= 0){
+            return;
+        } else if (n > size){
+            System.out.println("History doesn't contain " + n + " records.");
+        } else {
+            EquationList ptr = history;
+            for (int i = 0; i < (size - n); i++){
+                ptr = ptr.next;
+            }
+
+            printHistoryHelper(ptr);
+        }
+
     }    
 
+    private void printHistoryHelper(EquationList list){
+        if (list == null){
+            return;
+        } else if (list.next == null){
+            System.out.println(list.equation + " = " + list.result);
+        } else {
+            printHistoryHelper(list.next);
+            System.out.println(list.equation + " = " + list.result);
+        }
+    }
     /**
      * TASK 6: CLEAR AND UNDO
      * undoEquation() removes the most recent equation we saved to our history.
