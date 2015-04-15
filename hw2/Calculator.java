@@ -3,6 +3,7 @@ import list.EquationList;
 public class Calculator {
     // YOU MAY WISH TO ADD SOME FIELDS
     EquationList history;
+    EquationList tail;
     int size = 0;
     /**
      * TASK 2: ADDING WITH BIT OPERATIONS
@@ -73,13 +74,10 @@ public class Calculator {
         // YOUR CODE HERE
         if (history == null){
             history = new EquationList(equation, result, null);
+            tail = history;
         } else {
-            EquationList ptr = history;
-            while (ptr.next != null){
-                ptr = ptr.next;
-            }
-
-            ptr.next = new EquationList(equation, result, null);
+            tail.next = new EquationList(equation, result, null);
+            tail = tail.next;
         }
 
         size += 1;
