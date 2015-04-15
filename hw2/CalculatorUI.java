@@ -23,6 +23,12 @@ public class CalculatorUI{
 			} else if (tokens[0].equals("dump")){
 				calc.printAllHistory();
 				continue;
+			} else if (tokens[0].equals("clear") && tokens.length == 1){
+				calc.clearHistory();
+				continue;
+			} else if (tokens[0].equals("undo") && tokens.length == 1){
+				calc.undoEquation();
+				continue;
 			}
 			// Integer.valueOf(String value)
 			// is used to get the numeric value.

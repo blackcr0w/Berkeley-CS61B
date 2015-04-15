@@ -135,6 +135,18 @@ public class Calculator {
     **/
     public void undoEquation() {
         // YOUR CODE HERE
+        if (size <= 0){
+            return;
+        } else if (size == 1){
+            history = null;
+        } else {
+            EquationList ptr = history;
+            while (ptr.next.next != null){
+                ptr = ptr.next;
+            }
+            ptr.next = null;
+        }
+        size -= 1;
     }
 
     /**
@@ -143,6 +155,8 @@ public class Calculator {
      **/
     public void clearHistory() {
         // YOUR CODE HERE
+        history = null;
+        size = 0;
     }
 
     /**
