@@ -39,15 +39,15 @@ public class TestMaxSList {
 
     @Test
     public void textMax() {
-        MaxSList L = new MaxSList();
-        L.insertBack(99);
-        L.insertFront(50);
-        assertEquals(99, L.max()); 
+	MaxSList msl = new MaxSList();
+	msl.insertFront(30);
+	msl.insertBack(-23);
+	assertEquals(30, msl.max());   
 
-        L = new MaxSList(29);
-        L.insertBack(22);
-        L.insertFront(-58);
-        assertEquals(29, L.max());       
+	msl = new MaxSList(20);
+	assertEquals(20, msl.max());
+	assertEquals(20, msl.getFront());
+
     }
 
     public static void main(String[] args) {

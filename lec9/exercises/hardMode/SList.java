@@ -14,7 +14,8 @@ public class SList {
     }
 
     public SList(int x) {
-        sentinel = new IntNode(x, null);
+        this();
+        sentinel.next = new IntNode(x, null);
         size = 1;
     }
 
