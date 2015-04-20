@@ -3,14 +3,16 @@
 *   Implementation of a piece
 */
 public class Piece {
-	private boolean isFire; 	// true - fire piece; false - water piece
+	// Fields are protected for testing purposes.
+	// Set to private at the end of all testing.
+	protected boolean isFire; 	// true - fire piece; false - water piece
 	protected boolean kinged;	// reached final line
 	protected boolean captured;		// initializes to false since the piece hasn't
 						// at its creation
-	private Board board;
-	private int x;			// x coordinate
-	private int y;			// y coordinate
-	private String type;		// pawn/shield/bomb
+	protected Board board;
+	protected int x;			// x coordinate
+	protected int y;			// y coordinate
+	protected String type;		// pawn/shield/bomb
 
 	/** CONSTRUCTOR 
 	*   @param: boolean (is water/fire piece)
@@ -44,7 +46,7 @@ public class Piece {
 	*   @return: int
 	*/
 	public int side(){
-		return captured ? 1 : 0;
+		return isFire() ? 0 : 1;
 	}
 
 	/** Returns true if this piece has been Kinged.
