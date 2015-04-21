@@ -6,12 +6,15 @@
 */
 public class Board{
 	/** Draws an 8x8 blank grid. */
+	public String[] players;
 	public Piece[][] pieces;
 	public boolean shouldBeEmpty;
+	// Fields for a possible implementation of piece selection
 
 	public Board(boolean shouldBeEmpty){
 		pieces = new Piece[8][8];
 		this.shouldBeEmpty = shouldBeEmpty;
+		players = new String[]{"Fire", "Water"};
 	}
 
 	/** Helper method initializing the piece configuration */
@@ -124,6 +127,22 @@ public class Board{
 			p.x = x;
 			p.y = y;
 			pieces[x][y] = p;
+		}		
+	}
+
+	/** Removes this piece from the board and returns it.
+	*   If piece doesn't exist, or if (x,y) is out of bounds, return null. 
+	*
+	*   @input: int x, int y
+	*   @return: Piece  (null if piece doesn't exist)
+	*/
+	public Piece remove(int x, int y){
+		if (x >= 8 || x < 0 || y >= 8 || y < 0 || pieces[x][y] == null){
+			return null;
+		} else {
+			Piece piece = pieces[x][y];
+			pieces[x][y] = null;
+			return piece;
 		}		
 	}
 

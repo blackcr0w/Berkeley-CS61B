@@ -14,6 +14,11 @@ public class Piece {
 	protected int y;			// y coordinate
 	protected String type;		// pawn/shield/bomb
 
+	// Some new fields for canSelect and select methods
+	protected boolean moved;
+	// protected boolean moved;
+	// protected boolean selected;
+
 	/** CONSTRUCTOR 
 	*   @param: boolean (is water/fire piece)
 	*   @param: Board
@@ -29,6 +34,7 @@ public class Piece {
 		this.y = y;
 		this.type = type;
 		this.captured = false;
+		this.moved = false;
 	}
 
 	/** Returns true if this piece is a fire piece.
