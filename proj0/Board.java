@@ -149,17 +149,75 @@ public class Board{
 		}		
 	}
 
+	/** Helper method fo validMove.
+	*  Returns true if the opposing player has a piece
+	*  on abs(xf - xi), abs(yf - yi)
+	*
+	*  @param: int xi, int yi
+	*  @param: int xf, int yf
+	*  @return: boolean
+	*/
+	private boolean validCapturePosition(int xi, int yi, int xf, int yf){
+		int xm = (xf + xi) / 2;
+		int ym = (yf + yi) / 2;
+
+		return pieces[xm][ym] != null &&
+		          pieces[xm][ym].isFire() != pieces[xi][yi].isFire();
+	}
+
 	/** Returns true if the square clicked on is a valid move
 	*    for the selected piece
 	*    
-	*    // TODO: Implement the method
-	*
+	*    // TODO: REFACTOR
 	*    @param: int xi, int yi
 	*    @param: int xf, int yf
 	*    @return: boolean
 	*/
 	public boolean validMove(int xi, int yi, int xf, int yf){
-		return false;
+		if (xi < 0 || xi >= 8 || 
+		    yi < 0 || yi >= 8 || 
+		    xf < 0 || xf >= 8 || 
+		    yf < 0 || yf >= 8 ||
+		    pieces[xi][yi] == null || 
+		    pieces[xf][yf] != null){
+			return false;
+		}
+
+		if (pieces[xi][yi].kinged){
+			if  ((xf == xi - 1 || xf == xi + 1) && 
+			     (yf == yi + 1 || yf == yi - 1)){
+				return true;
+			} else if ((xf == xi - 2 || xf == xi + 2) &&
+				  (yf == yi + 2 || yf == yi - 2)){
+				return validCapturePosition(xi, yi, xf, yf);
+			} else {
+				return false;
+			}
+		}
+
+		if (player.equals("fire")){
+			if ((xf == xi - 1 || xf == xi + 1) &&
+			    (yf == yi + 1)){
+				return true;
+			} else if ((xf == xi - 2 || xf == xi + 2) &&
+				  (yf == yi + 2)){
+				return validCapturePosition(xi, yi, xf, yf);
+			} else {
+				return false;
+			}
+		} else if (player.equals("water")){
+			if ((xf == xi - 1 || xf == xi + 1) &&
+			    (yf == yi - 1)){
+				return true;
+			} else if ((xf == xi - 2 || xf == xi + 2) &&
+				  (yf == yi - 2)){
+				return validCapturePosition(xi, yi, xf, yf);
+			} else {
+				return false;
+			}		
+		} else {
+			return false;
+		}
 	}
 
 	/** Returns true if the square clicked may be selected.
@@ -230,6 +288,7 @@ public class Board{
 
 	/** Ends the turn  if canEndTurn returns true. */
 	public void endTurn(){
+		pieceSelected.captured = false;
 		pieceSelected = null;
 		pieceMoved = false;
 		player = player == "fire" ? "water" : "fire";
