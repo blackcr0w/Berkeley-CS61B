@@ -6,15 +6,18 @@
 */
 public class Board{
 	/** Draws an 8x8 blank grid. */
-	public String[] players;
+	public String player;
 	public Piece[][] pieces;
 	public boolean shouldBeEmpty;
 	// Fields for a possible implementation of piece selection
+	public Piece pieceSelected; 
+	public boolean pieceMoved;
 
 	public Board(boolean shouldBeEmpty){
 		pieces = new Piece[8][8];
 		this.shouldBeEmpty = shouldBeEmpty;
-		players = new String[]{"Fire", "Water"};
+		player = "fire";
+		pieceMoved = false;
 	}
 
 	/** Helper method initializing the piece configuration */
@@ -146,6 +149,100 @@ public class Board{
 		}		
 	}
 
+	/** Returns true if the square clicked on is a valid move
+	*    for the selected piece
+	*    
+	*    // TODO: Implement the method
+	*
+	*    @param: int xi, int yi
+	*    @param: int xf, int yf
+	*    @return: boolean
+	*/
+	public boolean validMove(int xi, int yi, int xf, int yf){
+		return false;
+	}
+
+	/** Returns true if the square clicked may be selected.
+	*   False, otherwise.
+	*
+	*   @param: int x, int y
+	*   @return: boolean
+	*
+	*   	    // TODO: Implement boolean validMove(int x1, int y1, int x2, int y2),
+	*	    // write a test
+	*/
+	// public boolean canSelect(int x, int y){
+	// 	if (pieces[x][y] != null){
+	// 		if (player != pieces[x][y].type){
+	// 			return false;
+	// 		}
+
+	// 		if (pieceSelected == null || !pieceMoved){
+	// 			return true;
+	// 		} else {
+	// 			return false;
+	// 		}
+	// 	} else if (pieceSelected != null && !pieceMoved){
+	// 		if (validMove(pieceSelected.x, pieceSelected.y, x, y)){
+	// 				return true;
+	// 		} else {
+	// 			return false;
+	// 		}
+	// 	} else if (pieceSelected != null && pieceSelected.captured){
+	// 		if (validMove(pieceSelected.x, pieceSelected.y, x, y)){
+	// 				return true;
+	// 		} else {
+	// 			return false;
+	// 		}			
+	// 	}
+	// }
+
+	/** Selects the piece on the board
+	*    if all the necessary conditions are met.
+	*
+	*    @param: int x, int y
+	*    @return: void
+	*
+	*	// TODO: write a test, 
+	*	// Assume canSelect returns True
+	*/
+	public void select(int x, int y){
+		if (pieces[x][y] != null){
+			pieceSelected = pieces[x][y];
+		} else {
+			pieceSelected.move(x, y);
+			pieceMoved = true;
+		}
+	}
+
+	/** Returns true if turn may be ended.
+	*   False, otherwise.
+	*/
+	public boolean canEndTurn(){
+		if (pieceSelected != null && pieceSelected.captured){
+			return true;
+		} else if (pieceMoved){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/** Ends the turn  if canEndTurn returns true. */
+	public void endTurn(){
+		pieceSelected = null;
+		pieceMoved = false;
+		player = player == "fire" ? "water" : "fire";
+	}
+
+	/** Returns the winner of the game. 
+	*	// TODO: write a test,
+	*	//	   implement the method
+	*/
+	public String winner(){
+		return "";
+	}
+
 	public static void main(String[] args){
 		StdDrawPlus.setXscale(0, 8);
 		StdDrawPlus.setYscale(0, 8);
@@ -158,4 +255,5 @@ public class Board{
 		}
 
 	}
+
 }

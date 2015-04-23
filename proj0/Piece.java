@@ -15,7 +15,6 @@ public class Piece {
 	protected String type;		// pawn/shield/bomb
 
 	// Some new fields for canSelect and select methods
-	protected boolean moved;
 	// protected boolean moved;
 	// protected boolean selected;
 
@@ -34,7 +33,8 @@ public class Piece {
 		this.y = y;
 		this.type = type;
 		this.captured = false;
-		this.moved = false;
+		// this.moved = false;
+		// this.selected = false;
 	}
 
 	/** Returns true if this piece is a fire piece.
@@ -105,5 +105,13 @@ public class Piece {
 	*/
 	public void doneCapturing(){
 		captured = false;
+	}
+
+	/** TODO: 
+	*   Moves this piece to (x, y) capturing interdemiate piece.
+	*   Assumes movement to (x, y) is valid.
+	*/
+	public void move(int x, int y){
+
 	}
 }
