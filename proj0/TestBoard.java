@@ -81,113 +81,113 @@ public class TestBoard{
 		Piece p = new Piece(false, b, 0, 0, "pawn");
 		b.place(p, 3, 4);
 		b.pieceSelected = p;
-		assertEquals("fire", b.player);
+		assertEquals(true, b.playerIsFire);
 		assertEquals(p, b.pieceSelected);
 		b.pieceMoved = true;
 		assertEquals(true, b.pieceMoved);
 
 		b.endTurn();
-		assertEquals("water", b.player);
+		assertEquals(false, b.playerIsFire);
 		assertEquals(null, b.pieceSelected);
 		assertEquals(false, b.pieceMoved);
 	}
 
-	// public void testIncorrectPlayerTurn(){
-	// 	// to select a fire piece, it must be
-	// 	// it must be fire player's turn
-	// 	// * turn: fire
-	// 	Board b = new Board(true);
-	// 	Piece p = new Piece(false, b, 0, 0, "pawn");
-	// 	b.place(p, 0, 0);
-	// 	// Can't select a water piece on 
-	// 	// fire player's turn
-	// 	assertEquals(false, b.canSelect(0, 0));
-	// 	p.isFire = true;
-	// 	assertEquals(true, b.canSelect(0,0));
-	// 	b.endTurn();
-	// 	// * turn: water
-	// 	Piece q = new Piece(false, b, 1, 0, "pawn");
-	// 	b.place(q, 1, 0);
-	// 	p.isFire = true;
-	// 	// Can't select a fire piece on
-	// 	// water player's turn
-	// 	assertEquals(false, b.canSelect(1, 0));
-	// 	p.isFire = false;
-	// 	assertEquals(true, b.canSelect(1, 0));		
-	// }
+	public void testIncorrectPlayerTurn(){
+		// to select a fire piece, it must be
+		// it must be fire player's turn
+		// * turn: fire
+		Board b = new Board(true);
+		Piece p = new Piece(false, b, 0, 0, "pawn");
+		b.place(p, 0, 0);
+		// Can't select a water piece on 
+		// fire player's turn
+		assertEquals(false, b.canSelect(0, 0));
+		p.isFire = true;
+		assertEquals(true, b.canSelect(0,0));
+		b.playerIsFire = false;
+		// * turn: water
+		Piece q = new Piece(false, b, 1, 0, "pawn");
+		b.place(q, 1, 0);
+		q.isFire = true;
+		// Can't select a fire piece on
+		// water player's turn
+		assertEquals(false, b.canSelect(1, 0));
+		q.isFire = false;
+		assertEquals(true, b.canSelect(1, 0));		
+	}
 
-	// public void testSelectSquareWithPiece(){
-	// 	// Square with a piece may be selected if:
-	// 	// 	- The player has not selected a piece
-	// 	// 	- The player has selected a piece, but 
-	// 	// 	  hasn't moved it
-	// 	Board b = new Board(true);
-	// 	Piece p = new Piece(true, b, 0, 0, "pawn");
-	// 	Piece q = new Piece(true, b, 1, 0, "bomb");
-	// 	b.place(p, 0, 0);		
-	// 	b.place(q, 1, 0);
-	// 	// No piece is selected
-	// 	assertEquals(true, b.canSelect(1, 0));
+	public void testSelectSquareWithPiece(){
+		// Square with a piece may be selected if:
+		// 	- The player has not selected a piece
+		// 	- The player has selected a piece, but 
+		// 	  hasn't moved it
+		Board b = new Board(true);
+		Piece p = new Piece(true, b, 0, 0, "pawn");
+		Piece q = new Piece(true, b, 1, 0, "bomb");
+		b.place(p, 0, 0);		
+		b.place(q, 1, 0);
+		// No piece is selected
+		assertEquals(true, b.canSelect(1, 0));
 
-	// 	// Piece has been selected, but hasn't been moved		
-	// 	b.pieceSelected = b.pieces[1][0];
-	// 	assertEquals(true, b.canSelect(0, 0));
+		// Piece has been selected, but hasn't been moved		
+		b.pieceSelected = b.pieces[1][0];
+		assertEquals(true, b.canSelect(0, 0));
 
-	// 	// Piece has been selected, and moved
-	// 	// Shouldn't be allowed to select another piece		
-	// 	b.pieceSelected = b.remove(0, 0);
-	// 	b.place(b.pieceSelected, 3, 2);
-	// 	b.pieceMoved = true;
-	// 	assertEquals(false, b.canSelect(1, 0));
-	// }
+		// Piece has been selected, and moved
+		// Shouldn't be allowed to select another piece		
+		b.pieceSelected = b.remove(0, 0);
+		b.place(b.pieceSelected, 3, 2);
+		b.pieceMoved = true;
+		assertEquals(false, b.canSelect(1, 0));
+	}
 
-	// public void testSelectEmptySquare(){
-	// 	// An empty square may be selected if
-	// 	// 	- (During this turn) a player has selected
-	// 	// 	  a piece which hasn't moved yet and is 
-	// 	// 	  selecting an empty slot which is a valid
-	// 	//  	  move for the previously selected piece
-	// 	// 	- (During this turn) a player has selected 
-	// 	// 	  a piece, captured, and has selected another
-	// 	// 	  valid capture destination. 
-	// 	Board b = new Board(true);
-	// 	Piece p = new Piece(true, b, 0, 0, "pawn");
-	// 	Piece q = new Piece(true, b, 1, 0, "bomb");
-	// 	b.place(p, 0, 0);		
-	// 	b.place(q, 1, 0);
-	// 	// turn 0:
-	// 	// piece selected but not moved
-	// 	b.pieceSelected = b.pieces[0][0];
-	// 	// selection of an empty slot for a valid move
-	// 	assertEquals(true, b.canSelect(0, 1));
-	// 	// selection of an empty slot for an invalid move
-	// 	assertEquals(false, b.canSelect(0, 6));
+	public void testSelectEmptySquare(){
+		// An empty square may be selected if
+		// 	- (During this turn) a player has selected
+		// 	  a piece which hasn't moved yet and is 
+		// 	  selecting an empty slot which is a valid
+		//  	  move for the previously selected piece
+		// 	- (During this turn) a player has selected 
+		// 	  a piece, captured, and has selected another
+		// 	  valid capture destination. 
+		Board b = new Board(true);
+		Piece p = new Piece(true, b, 0, 0, "pawn");
+		Piece q = new Piece(true, b, 1, 0, "bomb");
+		b.place(p, 0, 0);		
+		b.place(q, 1, 0);
+		// turn 0:
+		// piece selected but not moved
+		b.pieceSelected = b.pieces[0][0];
+		// selection of an empty slot for a valid move
+		assertEquals(true, b.canSelect(1, 1));
+		// selection of an empty slot for an invalid move
+		assertEquals(false, b.canSelect(0, 6));
 
 
-	// 	// *************************************************
-	// 	Piece firstToCapture = new Piece(false, b, 1, 1, "pawn");
-	// 	Piece secondToCapture = new Piece(false, b, 3, 3, "pawn");
-	// 	b.place(firstToCapture, 1, 1);
-	// 	b.place(secondToCapture, 3, 3);
-	// 	// Simulate capturing piece at 1, 1 by the piece at 0, 0
-	// 	b.remove(1, 1); 
-	// 	Piece moving = b.remove(0, 0);
-	// 	b.place(moving, 2, 2);
-	// 	b.pieceMoved = true;
-	// 	b.moving.captured = true;
-	// 	// select another valid capture destination
-	// 	assertEquals(true, b.canSelect(4, 4));
-	// 	// can't select a non-capture square
-	// 	assertEquals(false, b.canSelect(6, 7));
-	// 	assertEquals(false, b.canSelect(3, 3));
-	// }
+		// *************************************************
+		Piece firstToCapture = new Piece(false, b, 1, 1, "pawn");
+		Piece secondToCapture = new Piece(false, b, 3, 3, "pawn");
+		b.place(firstToCapture, 1, 1);
+		b.place(secondToCapture, 3, 3);
+		// Simulate capturing piece at 1, 1 by the piece at 0, 0
+		b.remove(1, 1); 
+		Piece moving = b.remove(0, 0);
+		b.place(moving, 2, 2);
+		b.pieceMoved = true;
+		moving.captured = true;
+		// select another valid capture destination
+		assertEquals(true, b.canSelect(4, 4));
+		// can't select a non-capture square
+		assertEquals(false, b.canSelect(6, 7));
+		assertEquals(false, b.canSelect(3, 3));
+	}
 
-	// @Test
-	// public void testCanSelect(){
-	// 	testIncorrectPlayerTurn();
-	// 	testSelectSquareWithPiece();
-	// 	testSelectEmptySquare();
-	// }
+	@Test
+	public void testCanSelect(){
+		testIncorrectPlayerTurn();
+		testSelectSquareWithPiece();
+		testSelectEmptySquare();
+	}
 
 	@Test
 	public void testValidMove(){

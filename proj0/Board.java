@@ -6,7 +6,7 @@
 */
 public class Board{
 	/** Draws an 8x8 blank grid. */
-	public String player;
+	public boolean playerIsFire;
 	public Piece[][] pieces;
 	public boolean shouldBeEmpty;
 	// Fields for a possible implementation of piece selection
@@ -16,7 +16,7 @@ public class Board{
 	public Board(boolean shouldBeEmpty){
 		pieces = new Piece[8][8];
 		this.shouldBeEmpty = shouldBeEmpty;
-		player = "fire";
+		playerIsFire = true;
 		pieceMoved = false;
 	}
 
@@ -195,7 +195,7 @@ public class Board{
 			}
 		}
 
-		if (player.equals("fire")){
+		if (playerIsFire){
 			if ((xf == xi - 1 || xf == xi + 1) &&
 			    (yf == yi + 1)){
 				return true;
@@ -205,7 +205,7 @@ public class Board{
 			} else {
 				return false;
 			}
-		} else if (player.equals("water")){
+		} else {
 			if ((xf == xi - 1 || xf == xi + 1) &&
 			    (yf == yi - 1)){
 				return true;
@@ -214,9 +214,7 @@ public class Board{
 				return validCapturePosition(xi, yi, xf, yf);
 			} else {
 				return false;
-			}		
-		} else {
-			return false;
+			}				
 		}
 	}
 
@@ -226,34 +224,37 @@ public class Board{
 	*   @param: int x, int y
 	*   @return: boolean
 	*
-	*   	    // TODO: Implement boolean validMove(int x1, int y1, int x2, int y2),
+	*   	   
 	*	    // write a test
 	*/
-	// public boolean canSelect(int x, int y){
-	// 	if (pieces[x][y] != null){
-	// 		if (player != pieces[x][y].type){
-	// 			return false;
-	// 		}
+	public boolean canSelect(int x, int y){
+		if (pieces[x][y] != null){
+			if (playerIsFire != pieces[x][y].isFire()){
+				return false;
+			}	
+			if (pieceSelected == null || !pieceMoved){
+				return true;
+			} else {
+				return false;
+			}
+		} else if (pieceSelected != null && !pieceMoved){
+			if (validMove(pieceSelected.x, pieceSelected.y, x, y)){
+					return true;
+			} else {
+				return false;
+			}
+		} else if (pieceSelected != null && pieceSelected.captured){
+			if (validMove(pieceSelected.x, pieceSelected.y, x, y)){
+					return true;
+			} else {
+				return false;
+			}			
+		}
 
-	// 		if (pieceSelected == null || !pieceMoved){
-	// 			return true;
-	// 		} else {
-	// 			return false;
-	// 		}
-	// 	} else if (pieceSelected != null && !pieceMoved){
-	// 		if (validMove(pieceSelected.x, pieceSelected.y, x, y)){
-	// 				return true;
-	// 		} else {
-	// 			return false;
-	// 		}
-	// 	} else if (pieceSelected != null && pieceSelected.captured){
-	// 		if (validMove(pieceSelected.x, pieceSelected.y, x, y)){
-	// 				return true;
-	// 		} else {
-	// 			return false;
-	// 		}			
-	// 	}
-	// }
+		// piece is not selected, and player is cliking
+		// on empty sqaure
+		return false;
+	}
 
 	/** Selects the piece on the board
 	*    if all the necessary conditions are met.
@@ -261,7 +262,7 @@ public class Board{
 	*    @param: int x, int y
 	*    @return: void
 	*
-	*	// TODO: write a test, 
+	*	// TODO: write a test
 	*	// Assume canSelect returns True
 	*/
 	public void select(int x, int y){
@@ -291,7 +292,7 @@ public class Board{
 		pieceSelected.captured = false;
 		pieceSelected = null;
 		pieceMoved = false;
-		player = player == "fire" ? "water" : "fire";
+		playerIsFire = !playerIsFire;
 	}
 
 	/** Returns the winner of the game. 
