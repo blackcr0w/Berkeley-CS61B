@@ -112,6 +112,26 @@ public class Piece {
 	*   Assumes movement to (x, y) is valid.
 	*/
 	public void move(int x, int y){
+		boolean willCapture = false;
+		int xToCapture = (this.x + x) / 2;
+		int yToCapture = (this.y + y) / 2;
+		if ((xToCapture != this.x && yToCapture != this.y) &&
+		   (xToCapture != x && yToCapture != y)){
+		   	willCapture = true;
+		}
 
+		Piece removed = this.board.remove(this.x, this.y);
+		this.board.place(removed, x, y);
+
+		if (willCapture){
+			this.board.remove(xToCapture, yToCapture);
+			this.captured = true;	
+		}
+
+		// Crowns appropriate pieces
+		if ((this.y == 0 && !isFire()) ||
+		    (this.y == 7 && isFire())){
+			this.kinged = true;
+		}		
 	}
 }

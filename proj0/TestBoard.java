@@ -222,7 +222,12 @@ public class TestBoard{
 
 	@Test
 	public void testSelect(){
-
+		Board b = new Board(true);
+		Piece p = new Piece(true, b, 0, 0, "pawn");
+		b.place(p, 0, 0);
+		b.select(0, 0);
+		b.select(1, 1);
+		assertEquals(p, b.pieces[1][1]);	
 	}
 
 	public static void main(String[] args){

@@ -289,7 +289,7 @@ public class Board{
 
 	/** Ends the turn  if canEndTurn returns true. */
 	public void endTurn(){
-		pieceSelected.captured = false;
+		pieceSelected.doneCapturing();
 		pieceSelected = null;
 		pieceMoved = false;
 		playerIsFire = !playerIsFire;
@@ -314,6 +314,32 @@ public class Board{
 			b.drawPieces();		
 		}
 
-	}
+		// TODO: change this to end the loop when the game ends
+		int x = Integer.MIN_VALUE;
+		int y = Integer.MIN_VALUE;
 
+		while (true){
+			while (!StdDrawPlus.isSpacePressed()){				
+				if (StdDrawPlus.mousePressed()){
+					x = (int) StdDrawPlus.mouseX();
+					y = (int) StdDrawPlus.mouseY();
+
+					if (b.canSelect(x, y)){
+						System.out.println("Can select");
+						b.select(x, y);				
+					}
+
+					System.out.println("The piece at " + x + ", " + y + " is: " + b.pieces[x][y]);
+					b.drawGrid();
+					b.drawPieces();
+					StdDrawPlus.show(15);
+				}										
+			}	
+
+			if (b.canEndTurn()){
+				System.out.println("Ending turn");
+				b.endTurn();
+			}			
+		}
+	}
 }
