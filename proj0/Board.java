@@ -12,12 +12,16 @@ public class Board{
 	// Fields for a possible implementation of piece selection
 	public Piece pieceSelected; 
 	public boolean pieceMoved;
+	public int numFirePieces;
+	public int numWaterPieces;
 
 	public Board(boolean shouldBeEmpty){
 		pieces = new Piece[8][8];
 		this.shouldBeEmpty = shouldBeEmpty;
 		playerIsFire = true;
 		pieceMoved = false;
+		numFirePieces = 12;
+		numWaterPieces = 12;
 	}
 
 	/** Helper method initializing the piece configuration */
@@ -38,10 +42,10 @@ public class Board{
 						pieces[i][j] = new Piece(true, this, i, j, "shield");
 						break;
 					case 2:
-						pieces[i][j] = new Piece(true, this, i, j, "bomb");
+						pieces[i][j] = new Bomb(true, this, i, j, "bomb");
 						break;
 					case 5:
-						pieces[i][j] = new Piece(false, this, i, j, "bomb");
+						pieces[i][j] = new Bomb(false, this, i, j, "bomb");
 						break;
 					case 6:
 						pieces[i][j] = new Piece(false, this, i, j, "shield");
@@ -73,15 +77,17 @@ public class Board{
 	public void drawGrid(){
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
-				if ((i + j) % 2 == 0){
+				if (pieceSelected != null && pieceSelected == pieces[i][j]){
+					StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
+				} else if ((i + j) % 2 == 0){
 					StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
 				} else {
 					StdDrawPlus.setPenColor(StdDrawPlus.RED);
 				}
 				StdDrawPlus.filledSquare(i+0.5, j+0.5, 0.5);
-                			StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
 			}
 		}
+		// StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
 	}
 
 	/** Draws the initial piece configuration on the board */
@@ -157,7 +163,7 @@ public class Board{
 	*  @param: int xf, int yf
 	*  @return: boolean
 	*/
-	private boolean validCapturePosition(int xi, int yi, int xf, int yf){
+	protected boolean validCapturePosition(int xi, int yi, int xf, int yf){
 		int xm = (xf + xi) / 2;
 		int ym = (yf + yi) / 2;
 
@@ -300,46 +306,59 @@ public class Board{
 	*	//	   implement the method
 	*/
 	public String winner(){
-		return "";
+		if (numFirePieces > 0){
+			return "Fire";
+		} else if (numWaterPieces > 0){
+			return "Water";
+		} else {
+			return "Draw";
+		}
 	}
 
 	public static void main(String[] args){
 		StdDrawPlus.setXscale(0, 8);
 		StdDrawPlus.setYscale(0, 8);
 
-		Board b = new Board(false);
-		b.drawGrid();
-		if (!b.shouldBeEmpty){
-			b.initializeBoard();
-			b.drawPieces();		
-		}
+		Board b = new Board(false);		
+		b.initializeBoard();
 
-		// TODO: change this to end the loop when the game ends
+		// TODO: Fixes the wierd flicker that happens at the first click
+		// 	  Need to figure out why...
+ 		b.drawGrid();	
+		b.drawPieces();
+		StdDrawPlus.show(20);					
+
 		int x = Integer.MIN_VALUE;
 		int y = Integer.MIN_VALUE;
 
-		while (true){
+		while (b.numFirePieces > 0 && b.numWaterPieces > 0){
+			b.drawGrid();	
+			b.drawPieces();
+			StdDrawPlus.show(20);
+
 			while (!StdDrawPlus.isSpacePressed()){				
 				if (StdDrawPlus.mousePressed()){
 					x = (int) StdDrawPlus.mouseX();
 					y = (int) StdDrawPlus.mouseY();
 
 					if (b.canSelect(x, y)){
-						System.out.println("Can select");
-						b.select(x, y);				
+						// System.out.println("Can select");
+						b.select(x, y);
+						b.drawGrid();
+						b.drawPieces();
+						StdDrawPlus.show(20);									
 					}
-
-					System.out.println("The piece at " + x + ", " + y + " is: " + b.pieces[x][y]);
-					b.drawGrid();
-					b.drawPieces();
-					StdDrawPlus.show(15);
+					// System.out.println("The piece at " + x + ", " + y + " is: " + b.pieces[x][y]);
 				}										
 			}	
-
+			// System.out.println("The number of red pieces: " + b.numFirePieces);
+			// System.out.println("The number of blue pieces: " + b.numWaterPieces);
 			if (b.canEndTurn()){
-				System.out.println("Ending turn");
+				// System.out.println("Ending turn");
 				b.endTurn();
-			}			
+			}
 		}
+
+		System.out.println(b.winner());
 	}
 }

@@ -113,25 +113,55 @@ public class Piece {
 	*/
 	public void move(int x, int y){
 		boolean willCapture = false;
-		int xToCapture = (this.x + x) / 2;
-		int yToCapture = (this.y + y) / 2;
-		if ((xToCapture != this.x && yToCapture != this.y) &&
-		   (xToCapture != x && yToCapture != y)){
-		   	willCapture = true;
+		// int xToCapture = (this.x + x) / 2;
+		// int yToCapture = (this.y + y) / 2;
+		// if ((xToCapture != this.x && yToCapture != this.y) &&
+		//    (xToCapture != x && yToCapture != y)){
+		//    	willCapture = true;
+		// }
+		int x_init = this.x;
+		int y_init = this.y;
+
+		if (this.board.validCapturePosition(x_init, y_init, x, y)){
+			willCapture = true;
 		}
 
 		Piece removed = this.board.remove(this.x, this.y);
 		this.board.place(removed, x, y);
 
 		if (willCapture){
-			this.board.remove(xToCapture, yToCapture);
-			this.captured = true;	
+			this.capture(x_init, y_init, x, y);
+			this.captured = true;
 		}
+
+
+		// if (willCapture){
+		// 	this.board.remove(xToCapture, yToCapture);
+		// 	this.captured = true;	
+		// }
 
 		// Crowns appropriate pieces
 		if ((this.y == 0 && !isFire()) ||
 		    (this.y == 7 && isFire())){
 			this.kinged = true;
 		}		
+	}
+
+	/** Performs a capture operation for a pawn or shield
+	*
+	*   @input: int x, int y
+	*   @return: void
+	*/
+	protected void capture(int x1, int y1, int x2, int y2){
+		int xToCapture = (x1 + x2) / 2;
+		int yToCapture = (y1 + y2) / 2;
+		if (this.board.pieces[xToCapture][yToCapture].isFire()){
+			this.board.numFirePieces -= 1;
+		} else {
+			this.board.numWaterPieces -= 1;
+		}
+
+		this.board.remove(xToCapture, yToCapture);
+
 	}
 }
