@@ -2,7 +2,7 @@
  *  @author Josh Hug
  */
 
-public class Dog {
+public class Dog implements Comparable<Dog> {
 	private String name;
 	private int size; 
 
@@ -16,6 +16,12 @@ public class Dog {
 		if (d1.size >= d2.size)
 			return d1;
 		return d2;
+	}
+
+	@Override
+	public int compareTo(Dog obj){
+		// Dog daUddaDog = (Dog) obj;
+		return this.size - obj.size;
 	}
 
 	/** Returns the max dog in a dog array */
