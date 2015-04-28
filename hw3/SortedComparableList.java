@@ -45,7 +45,12 @@ public class SortedComparableList {
      *  The first element, which is in location 0, is the 0th element.
      *  Assume i takes on the values [0, length of list - 1]. */
     public Comparable get(int i) {
-        return null; // REPLACE THIS LINE WITH YOUR SOLUTION
+        // REPLACE THIS LINE WITH YOUR SOLUTION
+        SortedComparableList ptr = this;
+        for (int j = 0; j < i; j++){
+            ptr = ptr.tail;
+        }
+        return ptr.head;
     }
 
     /** Adds every item in THAT to this list. */
