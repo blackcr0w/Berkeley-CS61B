@@ -99,8 +99,23 @@ public class SortedComparableList {
      *  Does not modify the original list elements.
      *  Assume START and END are >= 0.
      */
+    private static SortedComparableList sublistHelper(SortedComparableList L, int len){
+        if (len == 0 || L == null){
+            return null;
+        } else {
+            return new SortedComparableList(L.get(0), sublistHelper(L.tail, len-1));
+        }
+    }
+
     public static SortedComparableList sublist(SortedComparableList L, int start, int len) {
-        return null; // REPLACE THIS LINE WITH YOUR SOLUTION
+        // REPLACE THIS LINE WITH YOUR SOLUTION
+        if (L == null || start > len){
+            return null;
+        } else if (start > 0){
+            return sublist(L.tail, start-1, len);
+        } else {
+            return sublistHelper(L, len);
+        }
     }
 
     /** Removes items from L at position len+1 and later. */

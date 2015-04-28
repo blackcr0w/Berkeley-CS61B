@@ -76,6 +76,23 @@ public class TestSortedComparableList {
 		assertEquals(null, result);
 	}
 
+	@Test
+	public void testSublist(){
+		SortedComparableList list = new SortedComparableList();
+		list.insert(-3);
+		list.insert(5);
+		list.insert(6);
+		list.insert(10);
+		SortedComparableList result = SortedComparableList.sublist(list, 2, 10);
+		assertEquals(5, result.get(0));
+		assertEquals(6, result.get(1));
+		assertEquals(10, result.get(2));	
+
+		list = null;
+		result = SortedComparableList.sublist(list, 0, 2);
+		assertEquals(null, result);	
+	}
+
 	public static void main(String[] args){
 		jh61b.junit.textui.runClasses(TestSortedComparableList.class);
 
