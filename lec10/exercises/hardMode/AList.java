@@ -3,7 +3,7 @@
  */
 
 
-public class AList {
+public class AList  extends AbstractXList {
     public int[] items;
     /** Number of things in the array. */
     public int size; 
@@ -31,6 +31,7 @@ public class AList {
     }
 
     /** Inserts X into the back of the list. */
+    @Override
     public void insertBack(int x) {
         // what position does the 0th insert go into? position 0
         if (size == items.length) {
@@ -40,12 +41,9 @@ public class AList {
         size = size + 1; 
     }
 
-    /** Returns the item from the back of the list. */
-    public int getBack() {
-        return items[size - 1];       
-    }
 
     /** Gets the ith item in the list (0 is the front). */
+    @Override
     public int get(int i) {
         return items[i];        
     }
@@ -59,6 +57,7 @@ public class AList {
     }
 
     /** Returns the number of items in the list. */
+    @Override
     public int size() {
         return size;        
     }

@@ -9,16 +9,9 @@ public class TestNegativeFinder {
 
     @Test
     public void testHasNegative() {
-        XList L = new AList();
-        L.insertBack(50);
-        L.insertBack(99);
-        assertFalse(NegativeFinder.hasNegative(L));
-        L.insertBack(-5);
-        assertTrue(NegativeFinder.hasNegative(L));
-
-        L = new SList();
-        L.insertBack(50);
-        L.insertBack(99);
+        XList L = new SList();
+        L.insertBack(100);
+        L.insertBack(55);
         assertFalse(NegativeFinder.hasNegative(L));
         L.insertBack(-5);
         assertTrue(NegativeFinder.hasNegative(L));

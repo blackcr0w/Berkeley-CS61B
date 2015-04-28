@@ -3,6 +3,10 @@
  */
 
 /* Modify this file so that NegativeFinder works. */
-public class XList {
-
+public interface XList {
+    public void insertBack(int x);
+    public int getBack();
+    /** Returns the ith item in the list. */
+    public int get(int i);
+    public int size();	
 } 

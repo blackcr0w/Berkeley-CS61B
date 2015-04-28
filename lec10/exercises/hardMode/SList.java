@@ -2,7 +2,7 @@
  *  @author Josh Hug
  */
 
-public class SList {
+public class SList extends AbstractXList{
     protected IntNode sentinel;
     /* Do not change anything below this line. */
 
@@ -19,6 +19,7 @@ public class SList {
         size = 1;
     }
 
+    @Override
     public void insertBack(int x) {
         IntNode p = sentinel;
         while (p.next != null) {
@@ -42,17 +43,9 @@ public class SList {
         return sentinel.next.item;
     }
 
-    public int getBack() {
-        IntNode p = sentinel;
-        while (p.next != null) {
-            p = p.next;
-        }
-
-        // p is the LAST node at this point
-        return p.item;
-    }
 
     /** Returns the ith item in the list. */
+    @Override
     public int get(int i) {
         IntNode p = sentinel.next;
         for (int idx = 0; idx < i; idx += 1) {
@@ -62,6 +55,7 @@ public class SList {
         return p.item;
     }
 
+    @Override
     public int size() {
         return size;
     }
