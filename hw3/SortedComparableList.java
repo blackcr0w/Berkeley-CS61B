@@ -56,6 +56,10 @@ public class SortedComparableList {
     /** Adds every item in THAT to this list. */
     public void extend(SortedComparableList that) {
         // REPLACE THIS LINE WITH YOUR SOLUTION
+        while (that != null){
+            this.insert(that.head);
+            that = that.tail;
+        }
     }
 
     /** Returns a list consisting of the elements of L starting from
@@ -63,8 +67,30 @@ public class SortedComparableList {
       * list L is the 0th element of the list.
       *
       * This method should NOT modify L. */
+    private static SortedComparableList subTailHelper(SortedComparableList L){
+        SortedComparableList newList = new SortedComparableList();
+        SortedComparableList ptr = newList;
+        ptr.head = L.head;
+        L = L.tail;
+
+        while (L != null){
+            ptr.tail = new SortedComparableList(L.head, null);
+            ptr = ptr.tail;
+            L = L.tail;
+        }
+
+        return newList;
+    }
+
     public static SortedComparableList subTail(SortedComparableList L, int start) {
-        return null; // REPLACE THIS LINE WITH YOUR SOLUTION
+        // REPLACE THIS LINE WITH YOUR SOLUTION
+        if (L == null){
+            return null;
+        } else if (start > 0){
+            return SortedComparableList.subTail(L.tail, start-1);
+        } else {
+            return SortedComparableList.subTailHelper(L);
+        }
     }
 
     /** Returns the sublist consisting of LEN items from list L,
