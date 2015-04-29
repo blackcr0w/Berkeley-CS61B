@@ -93,6 +93,27 @@ public class TestSortedComparableList {
 		assertEquals(null, result);	
 	}
 
+	@Test
+	public void testExpungeTail(){
+		SortedComparableList list = new SortedComparableList();
+		list.insert(-3);
+		list.insert(5);
+		list.insert(4);
+		SortedComparableList.expungeTail(list, 2);
+		assertEquals(-3, list.get(0));
+		assertEquals(0, list.get(1));
+		assertEquals(4, list.get(2));
+		assertEquals(null, list.tail.tail.tail);
+
+		list = null;
+		SortedComparableList.expungeTail(list, 3);
+		assertEquals(null, list);	
+
+		// list = new SortedComparableList();
+		// SortedComparableList.expungeTail(0);
+		// assertEquals(null, list);	
+	}
+
 	public static void main(String[] args){
 		jh61b.junit.textui.runClasses(TestSortedComparableList.class);
 

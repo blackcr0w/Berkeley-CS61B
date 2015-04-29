@@ -119,8 +119,19 @@ public class SortedComparableList {
     }
 
     /** Removes items from L at position len+1 and later. */
+    private static void expungeTailHelper(SortedComparableList L){
+        L.tail = null;
+    }
+
     public static void expungeTail(SortedComparableList L, int len) {
         // REPLACE THIS LINE WITH YOUR SOLUTION
+        if (L == null){
+            return;
+        } else if (len > 0){
+            expungeTail(L.tail, len-1);
+        } else {
+            expungeTailHelper(L);
+        }
     }
 
     /**
