@@ -148,6 +148,13 @@ public class SortedComparableList {
      **/
     public void squish() {
         // REPLACE THIS LINE WITH YOUR SOLUTION
+        SortedComparableList ptr = this;
+        while (ptr != null && ptr.tail != null){
+            if (ptr.head.equals(ptr.tail.head)){
+                ptr.tail = ptr.tail.tail;
+            }
+            ptr = ptr.tail;
+        }
     }
 
     /** Duplicates each Comparable so that for every original

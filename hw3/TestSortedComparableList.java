@@ -114,6 +114,20 @@ public class TestSortedComparableList {
 		// assertEquals(null, list);	
 	}
 
+	@Test
+	public void testSquish(){
+		SortedComparableList list = new SortedComparableList();
+		list.insert(0);
+		list.insert(3);
+		list.insert(4);
+		list.insert(4);
+		list.squish();
+		assertEquals(0, list.get(0));
+		assertEquals(3, list.get(1));
+		assertEquals(4, list.get(2));
+		assertEquals("(0, 3, 4)", list.toString());	
+	}
+
 	public static void main(String[] args){
 		jh61b.junit.textui.runClasses(TestSortedComparableList.class);
 
