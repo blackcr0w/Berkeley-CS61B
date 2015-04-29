@@ -1,5 +1,5 @@
 import java.util.Formatter;
-
+import java.util.Arrays;
 /**
  * ApplicableIntList.java
  * A list that stores integers in ascending order.
@@ -7,6 +7,7 @@ import java.util.Formatter;
 public class ApplicableIntList{
     /** First element of list. */
     public int head;
+    public int size;
     /** Remaining elements of list. */
     public ApplicableIntList tail;
 
@@ -15,6 +16,7 @@ public class ApplicableIntList{
         // REPLACE THIS LINE WITH YOUR SOLUTION
         head = head0;
         tail = tail0;
+        size = 1;
     }
 
     /** A list with null tail, and head = 0. */
@@ -22,6 +24,7 @@ public class ApplicableIntList{
         // REPLACE THIS LINE WITH YOUR SOLUTION
         head = 0;
         tail = null;
+        size = 1;
     }
 
     /** Inserts int i into its correct location, doesn't handle cycles. */
@@ -39,6 +42,8 @@ public class ApplicableIntList{
             ptr.head = i;
             ptr.tail = new ApplicableIntList(tmp, ptr.tail);          
         }
+
+        size += 1;
     }
 
     /** Returns the i-th int in this list.
@@ -54,8 +59,37 @@ public class ApplicableIntList{
     }
 
     /** Applies the function f to every item in this list. */
+    private void createArrayHelper(IntUnaryFunction f, ApplicableIntList lst, int[] tmpArray){
+        int applied;
+        int index = 0;
+
+        while (lst != null){
+            applied = f.apply(lst.head);
+            lst = lst.tail;
+            tmpArray[index] = applied;
+            index += 1;
+        }     
+    }
+
+    private void resetValuesHelper(ApplicableIntList lst, int[] tmpArray){
+        int index = 0;
+
+          while (lst != null){
+            lst.head = tmpArray[index];
+            index += 1;
+            lst = lst.tail;
+        }         
+    }
+
     public void apply(IntUnaryFunction f) {
         // REPLACE THIS LINE WITH YOUR SOLUTION
+        int[] tmpArray = new int[size];
+        ApplicableIntList ptr = this;
+
+        createArrayHelper(f, ptr, tmpArray);
+        Arrays.sort(tmpArray);
+        resetValuesHelper(ptr, tmpArray);
+     
     }
 
     /** Returns NULL if no cycle exists, else returns cycle location. */
