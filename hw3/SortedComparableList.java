@@ -172,6 +172,11 @@ public class SortedComparableList {
      **/
     public void twin() {
         // REPLACE THIS LINE WITH YOUR SOLUTION
+        SortedComparableList ptr = this;
+        while (ptr != null){
+            ptr.tail = new SortedComparableList(ptr.head, ptr.tail);
+            ptr = ptr.tail.tail;
+        }
     }
 
     /** Returns NULL if no cycle exists, else returns cycle location. */

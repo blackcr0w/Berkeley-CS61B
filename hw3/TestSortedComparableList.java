@@ -128,6 +128,15 @@ public class TestSortedComparableList {
 		assertEquals("(0, 3, 4)", list.toString());	
 	}
 
+	@Test
+	public void testTwin(){
+		SortedComparableList list = new SortedComparableList();
+		list.insert(3);
+		list.insert(4);
+		list.twin();
+		assertEquals("(0, 0, 3, 3, 4, 4)", list.toString());		
+	}
+
 	public static void main(String[] args){
 		jh61b.junit.textui.runClasses(TestSortedComparableList.class);
 
