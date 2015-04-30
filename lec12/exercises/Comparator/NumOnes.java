@@ -1,20 +1,52 @@
 /** 
  *  @author Josh Hug
  */
+import java.util.Comparator;
 
-/* Your job here is to convert NumOnes into a Comparator as described in the
- * google slides linked from the readme.md folder in the same directory as this 
- * file. */
-
-public class NumOnes {
-    /** Returns the number of ones in the binary representation of x. */
-    public static int numOnes(int x) {
-        int totalOnes = 0;
-        for (int i = 0; i < 32; i += 1) {
-            int bottomBit = x & 1;
-            totalOnes += bottomBit;
-            x = x >> 1;
+public class NumOnes implements Comparator<Integer>{
+    /** Implements the Comparator interface, allowing
+    *   NumOnes to act as a comparator
+    */
+    public int compare(Integer a, Integer b){
+        int numOnesInA = numOnes(a);
+        int numOnesInB = numOnes(b);
+        if (numOnesInA == numOnesInB){
+            return 0;
+        } else if (numOnesInA > numOnesInB){
+            return 1;
+        } else {
+            return -1;
         }
-        return totalOnes;
+    }
+
+    /** Adds two numbers using binary operations */
+    private static int add(int x, int y) {
+        // YOUR CODE HERE
+        int part = x ^ y;
+        int carry = x & y;
+        if (carry == 0){
+            return part;
+        } else {
+            carry <<= 1;
+            return add(part, carry);
+        }        
+    }
+
+    /** Returns the number of ones in the binary representation of x. */
+    private static int helper(int countOnes, int x){
+    	if (x == 0){
+    		return countOnes;
+    	} else {
+    		if ((x & 0x1) == 1){
+    			countOnes = add(countOnes, 1);
+    		}
+
+    		return helper(countOnes, x >>> 1);
+    	}
+    }
+
+    public static int numOnes(int x) {
+        /* Your code here. */
+        return helper(0, x);
     }
 } 
