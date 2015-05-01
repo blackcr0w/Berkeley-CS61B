@@ -1,3 +1,4 @@
+package  ug.joshh.animal;
 /** 
  *  @author Josh Hug
  */
