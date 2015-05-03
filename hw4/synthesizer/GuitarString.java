@@ -21,7 +21,10 @@ public class GuitarString {
         //       Your buffer should be initially filled with zeros.
         capacity = (int) Math.round(SR/frequency);
         buffer = new ArrayRingBuffer(capacity); 
-        // ((ArrayRingBuffer) buffer).fillCount = capacity;              
+        // ((ArrayRingBuffer) buffer).fillCount = capacity; 
+        while (!buffer.isFull()){
+            buffer.enqueue(0);
+        }            
     }
     
     
@@ -33,7 +36,7 @@ public class GuitarString {
         //
         //       Make sure that your random numbers are different from each other.
         for (int i = 0; i < capacity; i++){
-            // buffer.dequeue();
+            buffer.dequeue();
             buffer.enqueue(Math.random()-0.5);
         }
     }
@@ -45,7 +48,7 @@ public class GuitarString {
         // TODO: Dequeue the front sample and enqueue a new sample that is
         //       the average of the two multiplied by the DECAY factor.
         //       Do not call StdAudio.play().
-        double average = (buffer.dequeue() + buffer.peek()) / 2.0;
+        double average = (buffer.dequeue() + buffer.peek()) / 2.0;        
         double scaledAverage = average * DECAY;
         buffer.enqueue(scaledAverage);
     }
