@@ -12,16 +12,22 @@ import static org.junit.Assert.*;
  */
 
 public class TestGuitarString {
-/*    @Test
+    @Test
     public void testPluckTheAString() {
         double CONCERT_A = 440.0;
         GuitarString aString = new GuitarString(CONCERT_A);
         aString.pluck();
         for (int i = 0; i < 50000; i += 1) {
             StdAudio.play(aString.sample());
+            // System.out.println("Iteration: " + i);
             aString.tic();
         }
-    }*/
+        
+        // double CONCERT_A = 440.0;
+        // GuitarString aString = new GuitarString(CONCERT_A);
+        // aString.pluck();    
+        // System.out.println(aString.sample());
+    }
 
     /** Calls tests for GuitarString. */
     public static void main(String[] args) {
