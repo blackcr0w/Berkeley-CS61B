@@ -23,7 +23,7 @@ public class GuitarHero {
             if (StdDraw.hasNextKeyTyped()) {
                 char key = StdDraw.nextKeyTyped();
                 int index = keyboard.indexOf(key);
-                if (index >= 0 && index < 37){                    
+                if (index != -1){                    
                     string = strings[index];
                     string.pluck();
                 }
